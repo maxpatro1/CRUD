@@ -1,9 +1,14 @@
 <template>
     <div>
         <navbar />
-        <div class="container">
-            <div v-if="loading">Загрузка</div>
-            <div style="display:flex; flex-wrap: wrap;" v-else>
+        <div>
+            <div v-if="loading" class="spinner-border text-primary spin" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div v-if="!loading && notes.length ===0" style="justify-content: center;display: flex;margin: 50px; color: grey">
+                <h1>Заметок пока не создано....</h1>
+            </div>
+            <div v-if="!loading && notes.length !==0" class="notes" v-else>
                 <Note
                     v-for="note in notes"
                     :key="note.id"
@@ -52,5 +57,14 @@ export default {
 </script>
 
 <style scoped>
-
+    .spin{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+    }
+    .notes{
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
 </style>
