@@ -1,14 +1,21 @@
 <template>
     <div>
+        <!--TODO alert service-->
         <navbar />
+        <!--Список заметок-->
         <div>
+            <!--Загрузка-->
             <div v-if="loading" class="spinner-border text-primary spin" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
+
+            <!--Пустой список-->
             <div v-if="!loading && notes.length ===0" style="justify-content: center;display: flex;margin: 50px; color: grey">
                 <h1>Заметок пока не создано....</h1>
             </div>
-            <div v-if="!loading && notes.length !==0" class="notes" v-else>
+
+            <!--Список заметок-->
+            <div v-if="!loading && notes.length !==0" class="notes">
                 <Note
                     v-for="note in notes"
                     :key="note.id"
@@ -40,6 +47,7 @@ export default {
         this.loadPosts();
     },
     methods: {
+        //Загрузка заметок
         loadPosts() {
             axios.get('/api/notes')
                 .then(res => {
@@ -49,6 +57,8 @@ export default {
                     }, 500)
                 })
         },
+
+        //Удаление заметок
         deleteNote(id){
             axios.delete('/api/notes/'+ id).then(res => this.loadPosts())
         }
